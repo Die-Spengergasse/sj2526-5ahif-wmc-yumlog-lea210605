@@ -1,0 +1,289 @@
+.bg-miami-vice {
+  /* background: linear-gradient(to right, #00BFFF, #fd0388); */
+  background: linear-gradient(to right, #0bd3d3, #f890e7);
+}
+
+/* Focus Management - Visible focus indicators for accessibility */
+*:focus,
+*:focus-visible {
+  outline: 3px solid #0066cc;
+  outline-offset: 2px;
+}
+
+/* Utility class for screen reader only content */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Skip to main content link for keyboard users */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: #0066cc;
+  color: white;
+  padding: 8px;
+  text-decoration: none;
+  z-index: 100;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* Improved button focus states */
+button:focus,
+.btn:focus,
+a.btn:focus {
+  outline: 3px solid #0066cc;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 0.2rem rgba(0, 102, 204, 0.25);
+}
+
+/* Register View Styles */
+.register-container {
+  max-width: 400px;
+  margin: 2rem auto;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.register-form .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.register-form label {
+  font-weight: bold;
+}
+
+.register-form input {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.register-button {
+  background-color: #4caf50;
+  color: white;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.register-button:hover {
+  background-color: #45a049;
+}
+
+.divider {
+  margin: 1.5rem 0;
+  text-align: center;
+  position: relative;
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 45%;
+  height: 1px;
+  background-color: #ccc;
+}
+
+.divider::before {
+  left: 0;
+}
+
+.divider::after {
+  right: 0;
+}
+
+.divider span {
+  background-color: white;
+  padding: 0 10px;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.google-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: white;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.2s;
+}
+
+.google-button:hover {
+  background-color: #f8f8f8;
+}
+
+.google-button img {
+  width: 18px;
+  height: 18px;
+}
+
+.alert {
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+}
+
+.alert-danger {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+}
+
+.alert-success {
+  color: #155724;
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+}
+
+.alert-info {
+  color: #004085;
+  background-color: #d1ecf1;
+  border-color: #bee5eb;
+}
+
+/* Navbar Button Styles */
+.btn-link {
+  text-decoration: none;
+  padding: 0;
+  border: none;
+}
+
+.btn-link:hover {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.btn-link:focus {
+  outline: 3px solid #ffffff;
+  outline-offset: 2px;
+}
+
+/* Performance optimizations - prevent CLS with image aspect ratios */
+.recipe-image-wrapper {
+  position: relative;
+  width: 100%;
+  padding-bottom: 75%; /* 4:3 aspect ratio (600/800 = 0.75) */
+  overflow: hidden;
+  background-color: #f0f0f0;
+}
+
+.recipe-image-wrapper img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.recipe-detail-image-wrapper {
+  position: relative;
+  width: 100%;
+  padding-bottom: 75%; /* 4:3 aspect ratio */
+  overflow: hidden;
+  background-color: #f0f0f0;
+}
+
+.recipe-detail-image-wrapper img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Optimize font loading */
+@font-face {
+  font-family: 'Pacifico';
+  font-display: swap;
+}
+
+/* Prevent CLS on hero section */
+.hero-section {
+  min-height: 200px;
+}
+
+/* Optimize card rendering to prevent CLS */
+.card {
+  contain: layout;
+}
+
+.card-body {
+  min-height: 120px;
+}
+
+/* Optimize list rendering */
+.list-group-item {
+  contain: layout;
+}
+
+/* Skeleton loader placeholders to prevent CLS */
+.placeholder-image {
+  width: 100%;
+  height: 250px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+.placeholder-image-detail {
+  width: 100%;
+  height: 400px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.placeholder {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+  border-radius: 4px;
+  display: inline-block;
+  min-height: 1em;
+}
+
+.placeholder-glow .placeholder {
+  animation: loading 1.5s infinite;
+}

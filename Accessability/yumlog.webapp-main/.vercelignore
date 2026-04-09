@@ -1,0 +1,41 @@
+# Git
+.git
+.gitignore
+
+# Dependencies
+node_modules/
+
+# Testing
+cypress/
+*.test.js
+*.spec.js
+
+# Build
+dist/
+.vite/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# CI/CD
+.github/
+
+# Docker
+Dockerfile
+docker-compose.yml
+nginx.conf
+.dockerignore
+
+# Docs
+DOCKER.md
+DEPLOYMENT.md

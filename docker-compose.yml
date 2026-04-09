@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  # Backend API
+  api:
+    build:
+      context: ./Accessability/yumlog.api-main
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: development
+      PORT: 3000
+    volumes:
+      - ./Accessability/yumlog.api-main:/app
+      - /app/node_modules
+    command: npm start
+    networks:
+      - yumlog-network
+    restart: unless-stopped
+
+  # Frontend Web App
+  webapp:
+    build:
+      context: ./Accessability/yumlog.webapp-main
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+      - "5173:5173"  # Vite dev server
+    environment:
+      VITE_API_URL: http://api:3000
+    depends_on:
+      - api
+    networks:
+      - yumlog-network
+    restart: unless-stopped
+
+networks:
+  yumlog-network:
+    driver: bridge

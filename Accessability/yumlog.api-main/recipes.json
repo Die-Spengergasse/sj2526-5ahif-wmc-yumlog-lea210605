@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "title": "Spaghetti Carbonara",
+    "description": "Klassisches italienisches Pasta-Gericht",
+    "ingredients": [
+      "Spaghetti",
+      "Eier",
+      "Speck",
+      "Parmigiano"
+    ],
+    "instructions": "Pasta kochen, Sauce zubereiten, vermischen",
+    "image": "https://via.placeholder.com/300?text=Carbonara",
+    "createdAt": "2026-04-09T12:47:46.871Z"
+  },
+  {
+    "id": 2,
+    "title": "Caesar Salad",
+    "description": "Frischer Salat mit Knoblauch-Dressing",
+    "ingredients": [
+      "Romaine Salat",
+      "Croutons",
+      "Parmigiano",
+      "Caesar Dressing"
+    ],
+    "instructions": "Salat waschen, Dressing anrühren, vermischen",
+    "image": "https://via.placeholder.com/300?text=Caesar+Salad",
+    "createdAt": "2026-04-09T12:47:46.873Z"
+  }
+]
