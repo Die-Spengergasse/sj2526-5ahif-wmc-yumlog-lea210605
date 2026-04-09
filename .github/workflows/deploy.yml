@@ -13,7 +13,7 @@ jobs:
     
     strategy:
       matrix:
-        node-version: [18.x, 20.x]
+        node-version: [20.x]
     
     steps:
     - uses: actions/checkout@v4
@@ -41,13 +41,9 @@ jobs:
         name: frontend-build
         path: Accessability/yumlog.webapp-main/dist
   
-  # Job 2: Test und Build Backend
-  build-backend:
-    runs-on: ubuntu-latest
-    
     strategy:
       matrix:
-        node-version: [18.x, 20.x]
+        node-version: [20.x]
     
     steps:
     - uses: actions/checkout@v4
