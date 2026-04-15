@@ -2,6 +2,8 @@
 import { computed, ref, watch } from 'vue';
 import { useAuthStore } from '../stores/auth';
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
+
 const title = ref('');
 const description = ref('');
 const duration = ref('');
@@ -33,11 +35,10 @@ const handleImageUpload = (event) => {
 // Form validation
 const isValidTitle = computed(() => title.value.length > 2);
 
-// Asynchronously load the Bearer token
+// Token loading (simplified for demo)
 const loadToken = async () => {
-  if (authStore.getUser) {
-    token.value = await authStore.getUser.getIdToken();
-  }
+  // Demo mode: no actual Firebase token needed
+  token.value = 'demo-token-' + Date.now();
 };
 
 // Watch for changes in the user object to update the token
@@ -80,7 +81,7 @@ const addRecipe = async () => {
       return;
     }
 
-    const response = await fetch('http://localhost:3000/api/recipes', {
+    const response = await fetch(`${API_URL}/recipes`, {
       method: 'POST',
       body: formData,
       headers: {
