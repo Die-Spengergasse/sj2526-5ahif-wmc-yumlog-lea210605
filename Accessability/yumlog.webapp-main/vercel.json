@@ -5,7 +5,16 @@
   "framework": "vue",
   "devCommand": "npm run dev",
   "regions": ["fra1"],
+  "functions": {
+    "api/index.js": {
+      "runtime": "nodejs20.x"
+    }
+  },
   "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/api"
+    },
     {
       "source": "/(.*)",
       "destination": "/index.html"
