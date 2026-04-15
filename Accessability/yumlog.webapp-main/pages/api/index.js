@@ -31,20 +31,26 @@ export default function handler(req, res) {
     return;
   }
 
-  const url = new URL(req.url, `http://${req.headers.host}`);
-  const pathname = url.pathname;
+  // Parse the request path
+  const { pathname, searchParams } = new URL(req.url, `http://${req.headers.host}`);
   const method = req.method;
+  
+  // Health check
+  if (pathname === '/api/health' && method === 'GET') {
+    return res.status(200).json({ status: 'API is running' });
+  }
 
-  // GET /api/recipes
+  // Extract ID from path (e.g., /api/recipes/1)
+  const recipeIdMatch = pathname.match(/^\/api\/recipes\/(\d+)$/);
+  const recipeId = recipeIdMatch ? parseInt(recipeIdMatch[1]) : null;
+
+  // GET /api/recipes or /api/recipes/:id
   if (pathname === '/api/recipes' && method === 'GET') {
     return res.status(200).json(recipes);
   }
 
-  // GET /api/recipes/:id
-  const getByIdMatch = pathname.match(/^\/api\/recipes\/(\d+)$/);
-  if (getByIdMatch && method === 'GET') {
-    const id = parseInt(getByIdMatch[1]);
-    const recipe = recipes.find(r => r.id === id);
+  if (recipeIdMatch && method === 'GET') {
+    const recipe = recipes.find(r => r.id === recipeId);
     if (!recipe) {
       return res.status(404).json({ error: 'Recipe not found' });
     }
@@ -53,7 +59,7 @@ export default function handler(req, res) {
 
   // POST /api/recipes
   if (pathname === '/api/recipes' && method === 'POST') {
-    const { title, description, ingredients, instructions, image } = req.body;
+    const { title, description, ingredients, instructions, image } = req.body || {};
     
     if (!title || !description) {
       return res.status(400).json({ error: 'Title and description are required' });
@@ -74,21 +80,19 @@ export default function handler(req, res) {
   }
 
   // PUT /api/recipes/:id
-  const putByIdMatch = pathname.match(/^\/api\/recipes\/(\d+)$/);
-  if (putByIdMatch && method === 'PUT') {
-    const id = parseInt(putByIdMatch[1]);
-    const recipeIndex = recipes.findIndex(r => r.id === id);
+  if (recipeIdMatch && method === 'PUT') {
+    const recipeIndex = recipes.findIndex(r => r.id === recipeId);
 
     if (recipeIndex === -1) {
       return res.status(404).json({ error: 'Recipe not found' });
     }
 
-    const { title, description, ingredients, instructions, image } = req.body;
+    const { title, description, ingredients, instructions, image } = req.body || {};
     recipes[recipeIndex] = {
       ...recipes[recipeIndex],
       title: title || recipes[recipeIndex].title,
       description: description || recipes[recipeIndex].description,
-      ingredients: ingredients || recipes[recipeIndex].ingredients,
+      ingredients: ingredients !== undefined ? ingredients : recipes[recipeIndex].ingredients,
       instructions: instructions || recipes[recipeIndex].instructions,
       image: image || recipes[recipeIndex].image,
       updatedAt: new Date().toISOString()
@@ -98,23 +102,17 @@ export default function handler(req, res) {
   }
 
   // DELETE /api/recipes/:id
-  const deleteByIdMatch = pathname.match(/^\/api\/recipes\/(\d+)$/);
-  if (deleteByIdMatch && method === 'DELETE') {
-    const id = parseInt(deleteByIdMatch[1]);
-    const initialLength = recipes.length;
-    recipes.splice(recipes.findIndex(r => r.id === id), 1);
+  if (recipeIdMatch && method === 'DELETE') {
+    const recipeIndex = recipes.findIndex(r => r.id === recipeId);
 
-    if (recipes.length === initialLength) {
+    if (recipeIndex === -1) {
       return res.status(404).json({ error: 'Recipe not found' });
     }
 
+    recipes.splice(recipeIndex, 1);
     return res.status(200).json({ message: 'Recipe deleted successfully' });
   }
 
-  // Health check
-  if (pathname === '/api/health' && method === 'GET') {
-    return res.status(200).json({ status: 'API is running' });
-  }
-
+  // No matching route
   return res.status(404).json({ error: 'Not found' });
 }
